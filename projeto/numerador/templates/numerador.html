@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/numerador.css' %}">
+    <title>Numerador</title>
+</head>
+<body>
+
+    <div class="Container">
+
+        <!-- Barra de Pesquisa -->
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Buscar...">
+            <button onclick="searchModels()">Pesquisar</button>
+        </div>
+        
+        
+        <!-- Botão de Mostrar Mais/Menos -->
+        <button id="toggleButton" onclick="toggleModels()">Mostrar Mais</button>
+
+        <div id="modelsContainer">
+            {% for modelo,numerador in numeradores.items     %}
+            <div class="container">
+                <h1>{{ modelo.modelo }}</h1>
+                <div class="ocorrencias">
+                    <h1>Registros: {{ numerador }}/{{ano}}</h1>
+                </div>
+                <div class="buttons">
+                    <a href="{% url 'registro' modelo.id_modelo %}">
+                        <button>Novo</button>
+                    </a>
+                    <a href="{% url 'listagem' modelo.id_modelo %}">
+                        <button>Listar</button>
+                    </a>
+                </div>
+            </div>
+        
+            {% empty %}
+            <li>Nenhum modelo encontrado.</li>
+            {% endfor %}
+        </div>
+        
+    </div>
+
+    <script>
+        // Função para exibir ou ocultar os modelos
+        let showingAll = false;
+        function toggleModels() {
+            const containers = document.querySelectorAll(".container");
+            showingAll = !showingAll;
+            containers.forEach((container, index) => {
+                container.style.display = showingAll || index < 5 ? 'block' : 'none';
+            });
+            document.getElementById("toggleButton").innerText = showingAll ? "Mostrar Menos" : "Mostrar Mais";
+        }
+
+        // Exibir os primeiros 5 modelos ao carregar a página
+        toggleModels();
+
+        // Função de pesquisa
+        function searchModels() {
+            const searchTerm = document.getElementById("search").value.toLowerCase();
+            const containers = document.querySelectorAll(".container");
+
+            containers.forEach(container => {
+                const title = container.querySelector("h1").innerText.toLowerCase();
+                container.style.display = title.includes(searchTerm) ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
+    
