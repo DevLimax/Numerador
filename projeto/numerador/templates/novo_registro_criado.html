@@ -4,16 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/novo_reg.css' %}">
+    <link rel="stylesheet" href="{% static 'css/lista.css' %}">
     <title>Criado</title>
 </head>
 <body>
     <div class="Container">
-        <h1>Novo registro criado:</h1>
-        <p>Titulo:{{ titulo }}</p>
-        <p>Observaçao:{{ observaçao }}</p>
-        <p>Tipo:{{ modelo.modelo }}</p>
-        <p>Unidade:{{ unidade.unidade }}</p>
-        <p>Usuario:{{ usuario.nome }}</p>
+        <div class="container">
+            <h1>Registro Nº:{{numeraçao}}</h1>
+            <p>Titulo:{{titulo}}</p>
+            <p>Observação:{{observaçao}}</p>
+            <p>Usuario: {{usuario.nome}}</p>
+            <p>Modelo: {{modelo.modelo}}</p>
+            <p>Unidade: {{unidade.unidade}}
+        </div>
+        <a href="{% url 'pagina_numerador' %}">
+            <button id="backButton">Voltar para Numerador</button>
+        </a>
     </div>
 </html>

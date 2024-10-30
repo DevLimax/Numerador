@@ -100,7 +100,6 @@ def registro(request,id):
         novo_registro = Registros(titulo=titulo,observacao=observaçao,unidade=unidade_istance,modelo=modelo_instance,
                                   data=data,usuario=usuario_instance)
         if novo_registro:
-            """Checando o registro para salvar no banco,e atualizar a tabela de ocorrencias do modelo escolhido"""
             try:
                 numerador = Numeradores.objects.get(unidade=unidade_istance,modelo=modelo_instance)
                 if numerador:
@@ -114,7 +113,7 @@ def registro(request,id):
             else:
                 novo_registro.numeraçao = 1
                 novo_registro.save()
-            return render(request,'novo_registro_criado.html',{'titulo':titulo,'observaçao':observaçao, 'modelo':modelo_instance,'unidade':unidade_istance,'usuario':usuario_instance,'data':data})     
+            return render(request,'novo_registro_criado.html',{'titulo':titulo,'observaçao':observaçao, 'modelo':modelo_instance,'unidade':unidade_istance,'usuario':usuario_instance,'data':data,'numeraçao':novo_registro.numeraçao})     
     return render(request,'novo_registro.html',{'forms':forms,'modelo':id_modelo})      
 
 def listagem(request,id):
