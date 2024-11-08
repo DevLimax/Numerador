@@ -82,7 +82,7 @@ button {
 }
 
 /* Estilo para a contagem de ocorrências (data) */
-.container .ocorrencias {
+.ocorrencias h1{
     font-size: 14px;
     color: #666;
     text-align: center;
@@ -102,4 +102,34 @@ button {
     margin-bottom: 5px;
     padding: 8px 15px;
     width: 60px;
+}
+
+.user-info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #f1f1f1;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-info p {
+    margin: 0;
+    font-weight: bold;
+    color: #333;
+}
+
+.logout-button {
+    margin-top: 5px;
+    padding: 5px 10px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.logout-button:hover {
+    background-color: #c9302c;
 }

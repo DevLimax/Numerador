@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.models import User
 import psycopg2
 
 class Unidades(models.Model):
@@ -35,9 +35,8 @@ class Usuarios(models.Model):
         __str__: Retorna o nome do usuário para exibição.
     """
     id_usuario = models.AutoField(primary_key=True)  
-    nome = models.CharField(max_length=200, null=False)
-    senha = models.CharField(max_length=200, null=False)
     unidade = models.ForeignKey(Unidades, on_delete=models.CASCADE, related_name='usuarios')  
+    auth_uid = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def str(self):
         return self.nome
@@ -111,6 +110,7 @@ class Numeradores(models.Model):
     unidade = models.ForeignKey(Unidades, on_delete=models.CASCADE, related_name='contador')
     modelo = models.ForeignKey(TipoModelo, on_delete=models.CASCADE, related_name='contador')  
     contagem = models.IntegerField(default=0,null=False)
+    is_activate = models.BooleanField(default=False)
     
     def __str__(self):
         return str(self.contagem)

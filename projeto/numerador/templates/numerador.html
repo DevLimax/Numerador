@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/numerador.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_numerador.css' %}">
     <title>Numerador</title>
 </head>
 <body>
@@ -17,31 +17,39 @@
             <button onclick="searchModels()">Pesquisar</button>
         </div>
         
-        
+        <div class="user-info">
+            <p>Usuario:{{usuario.nome}}</p>
+            <p>Unidade:{{unidade.unidade}}</p>
+            <a href="{% url 'pagina_login' %}">
+                <button class="logout-button">Sair</button>
+            </a>
+        </div>
+
+
         <!-- Botão de Mostrar Mais/Menos -->
         <button id="toggleButton" onclick="toggleModels()">Mostrar Mais</button>
 
         <div id="modelsContainer">
-            {% for modelo,numerador in numeradores.items     %}
+            {% for numerador in numeradores %}
             <div class="container">
-                <h1>{{ modelo.modelo }}</h1>
+                <h1>{{ numerador.modelo.modelo }}</h1>
                 <div class="ocorrencias">
-                    <h1>Registros: {{ numerador }}/{{ano}}</h1>
-                </div>
+                    <h1>Registros: {{ numerador.contagem}}/{{ano}}</h1>
+                </div>  
                 <div class="buttons">
-                    <a href="{% url 'registro' modelo.id_modelo %}">
+                    <a href="{% url 'registro' numerador.modelo.id_modelo %}">
                         <button>Novo</button>
                     </a>
-                    <a href="{% url 'listagem' modelo.id_modelo %}">
+                    <a href="{% url 'listagem' numerador.modelo.id_modelo %}">
                         <button>Listar</button>
                     </a>
                 </div>
             </div>
-        
             {% empty %}
             <li>Nenhum modelo encontrado.</li>
             {% endfor %}
         </div>
+        
         
     </div>
 

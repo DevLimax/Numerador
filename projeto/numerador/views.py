@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .forms import Logar,Novo_registro
 from .models import Usuarios,TipoModelo,Registros,Unidades,Numeradores
 from datetime import datetime
-from django.contrib.auth.hashers import check_password,make_password
+from django.contrib.auth import login,authenticate
 
 
 ano_atual = datetime.now().year
@@ -24,22 +24,26 @@ def pagina_login(request):
         HttpResponse: Se o método for GET, renderiza o formulário de login (`pagina_login.html`).
                       Se o método for POST, redireciona para `pagina_numerador` ou retorna uma mensagem de erro.        
     """
-    login = Logar
+    logar = Logar
     if request.method == "POST":
-        login = Logar(request.POST)
-        nome_usuario = login.data['usuario']
-        senha = login.data['senha']
-        try:
-            usuario = Usuarios.objects.get(nome=nome_usuario)
-            if senha == usuario.senha:
-                request.session['usuario_id'] = usuario.id_usuario
-                request.session['unidade_id'] = usuario.unidade_id
-                return redirect('pagina_numerador')
-            else:
-                return HttpResponse('Senha Incorreta')
-        except Usuarios.DoesNotExist:
-            return HttpResponse('Usuario Não encontrado')
-    return render(request,'pagina_login.html',{'forms':login})
+        logar = Logar(request.POST)
+        if logar.is_valid():
+            nome_usuario = logar.data['usuario']
+            senha = logar.data['senha']
+            try:
+                usuario = Usuarios.objects.get(nome=nome_usuario)
+                if senha == usuario.senha:
+                    request.session['usuario_id'] = usuario.id_usuario
+                    request.session['unidade_id'] = usuario.unidade_id
+                    return redirect('pagina_numerador')
+                else:
+                    return HttpResponse('Senha Incorreta')
+            except Usuarios.DoesNotExist:
+                return HttpResponse('Usuario Não encontrado')
+            
+        
+        
+    return render(request,'pagina_login.html',{'forms':logar})
 
 def pagina_numerador(request):
     """
@@ -55,19 +59,25 @@ def pagina_numerador(request):
     Returns:
         HttpResponse: Renderiza `numerador.html` com as informações dos modelos, ano atual e contadores.
     """
-    if 'usuario_id' not in request.session:
-        return redirect('pagina_login')
-    unidade_do_usuario = request.session['unidade_id']
-    numeradores_por_modelo = {  }
-    numeradores = Numeradores.objects.all() 
-    modelos = TipoModelo.objects.all()
-    for modelo in modelos:
-        try :
-            numerador_modelo = Numeradores.objects.get(modelo=modelo.id_modelo,unidade=unidade_do_usuario).contagem
-        except Numeradores.DoesNotExist:
-            numerador_modelo = 0
-        numeradores_por_modelo[modelo] = numerador_modelo
-    return render(request,'numerador.html',{'modelos':modelos,'ano':ano_atual,'numeradores':numeradores_por_modelo})
+    if request.user.is_autenticated:
+        unidade_do_usuario = request.session['unidade_id']
+        id_do_usuario = request.session['usuario_id']
+        unidade_instance = Unidades.objects.get(id_unidade = unidade_do_usuario)
+        usuario_instance = Usuarios.objects.get(id_usuario = id_do_usuario)
+        numeradores_banco = Numeradores.objects.filter(unidade_id=unidade_instance,is_activate=True)
+        lista_numeradores = []
+        for numerador_banco in numeradores_banco:
+            numerador = {}
+            numerador['modelo'] = TipoModelo.objects.get(id_modelo = numerador_banco.modelo_id)
+            numerador['contagem'] = numerador_banco.contagem
+            
+            lista_numeradores.append(numerador)
+
+        
+        return render(request,'numerador.html',{'unidade':unidade_instance,'usuario':usuario_instance,'ano':ano_atual,'numeradores':lista_numeradores})
+            
+    return redirect('pagina_login')
+    
 
 def registro(request,id):
     """
