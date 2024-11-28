@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{% static 'numerador/css/style_numerador.css' %}">
+    <link rel="stylesheet" href="{% static 'numerador/js/home.js' %}">
+</head>
+<body>
+    <header>
+        <!-- Botão do menu -->
+        <button class="menu-button" id="menuButton">☰</button>
+
+        <!-- Barra de pesquisa -->
+        <div class="search-bar">
+            <input id="searchInput" type="text" placeholder="Pesquisar...">
+        </div>
+
+        <!-- Botão de Logout -->
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button class="logout-button">Logout</button>
+        </form>
+    </header>    
+
+    <div id="sidebar" class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="#">Opção 1</a></li>
+            <li><a href="#">Opção 2</a></li>
+            <li><a href="#">Opção 3</a></li>
+            <li><a href="#">Opção 4</a></li>
+        </ul>
+    </div>
+
+    <div class="Container">
+        {{ unidade }}
+        {% for numerador in page.object_list %}
+            <div class="category-container">
+                <h1 class="crime-title">{{ numerador.categoria.nome_categoria }}</h1>
+                <p>Registros: {{ numerador.contagem }}</p>
+                <a href="{% url 'novo_registro' numerador.categoria.id_categoria %}">
+                    <button class="novo-button">Novo</button>
+                </a>
+                <br>
+                <a href="{% url 'lista' numerador.categoria.id_categoria %}">
+                    <button class="listar-button">Listar</button>
+                </a>
+            </div>
+        {% endfor %}
+        
+        <!-- Paginação -->
+        <div class="page-links">
+            {% if page.has_previous %}
+                <a href="{% url 'home' %}?page={{ page.previous_page_number }}">
+                    <button><</button>
+                </a>
+            {% endif %}
+            {% if page.has_next %}
+                <a href="{% url 'home' %}?page={{ page.next_page_number }}">
+                    <button>></button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const categories = document.querySelectorAll('.category-container');
+        
+            searchInput.addEventListener('input', function () {
+                const filter = searchInput.value.toLowerCase(); // Obtém o valor da pesquisa em minúsculo
+        
+                categories.forEach(category => {
+                    const title = category.querySelector('.crime-title').textContent.toLowerCase(); // Título em minúsculo
+                    if (title.includes(filter)) {
+                        category.style.display = 'block'; // Mostra o container correspondente
+                    } else {
+                        category.style.display = 'none'; // Esconde os não correspondentes
+                    }
+                });
+            });
+        });
+        
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuButton = document.getElementById('menuButton');
+            const sidebar = document.getElementById('sidebar');
+    
+            // Alterna a visibilidade da sidebar
+            menuButton.addEventListener('click', function (e) {
+                sidebar.classList.toggle('open');
+                document.body.classList.toggle('sidebar-open'); // Impede scroll na página
+                e.stopPropagation(); // Evita que o clique no botão feche a sidebar
+            });
+    
+            // Fecha a sidebar ao clicar fora dela
+            document.addEventListener('click', function (e) {
+                if (sidebar.classList.contains('open') && !sidebar.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                    document.body.classList.remove('sidebar-open');
+                }
+            });
+    
+            // Evita que cliques dentro da sidebar fechem ela
+            sidebar.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        });
+    
+
+        
+    </script>
+</body>
+</html>

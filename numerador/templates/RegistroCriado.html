@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'numerador/css/lista.css' %}">
+    <title>Criado</title>
+</head>
+<body>
+    <div class="Container">
+        <div class="container">
+            <h1>Registro Criado > Nº:{{dados.numeraçao}}</h1>
+            <p>Titulo:{{dados.titulo}}</p>
+            <p>Observação:{{dados.observacao}}</p>
+            <p>Usuario: {{dados.usuario}}</p>
+            <p>Categoria: {{dados.categoria.nome_categoria}}</p>
+            <p>Tipo de Crime: {{dados.tipo_crime}}</p>
+            <p>Unidade: {{dados.unidade}}
+        </div>
+        <a href="{% url 'home' %}">
+            <button id="backButton">Voltar para Numerador</button>
+        </a>
+    </div>
+</html>

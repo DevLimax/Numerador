@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'numerador/css/lista.css' %}">
+    <title>Listagem</title>
+</head>
+<body>
+    
+    <div class="Container">
+
+        {% for registro in lista %}
+        <div class="container">
+            <h1> Registro de Nº : {{registro.numeraçao}} </h1>
+            <p>Titulo:{{registro.titulo}}</p>
+            <p>Observação:{{registro.observacao}}</p>
+            <p>Usuario: {{registro.usuario}}</p>
+            <p>Tipo de crime: {{registro.tipo_crime}}</p>
+            <p>Categoria: {{registro.categoria.nome_categoria}}</p>
+            <p>Unidade: {{registro.unidade}}
+            </p>
+        </div>
+        {% endfor %}
+        <a href="{% url 'home' %}">
+            <button id="backButton">Voltar para Numerador</button>
+        </a>
+    </div>
+
+</body>
+</html>

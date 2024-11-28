@@ -1,0 +1,65 @@
+/* Estilo geral para a página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo do contêiner principal */
+.Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Estilo de cada bloco de registro */
+.container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.2s;
+}
+
+/* Estilo para o título de cada registro */
+.container h1 {
+    font-size: 20px;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+/* Estilo para os parágrafos de informações */
+.container p {
+    font-size: 16px;
+    color: #555555;
+    margin: 5px 0;
+}
+
+/* Adiciona efeito ao passar o mouse */
+.container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo do botão "Voltar" */
+#backButton {
+    background-color: #333333;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+/* Efeito de hover para o botão "Voltar" */
+#backButton:hover {
+    background-color: #555555;
+    }

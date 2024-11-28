@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="{% static 'numerador/css/cadastro.css' %}">
+</head>
+<body>
+    <div class="cadastro-container">
+        <form class="cadastro-form" action="{% url 'Cadastro' %}" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="submit">
+                Cadastrar
+            </button>
+        </form>
+    </div>
+</body>
+</html>
