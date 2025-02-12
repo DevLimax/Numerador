@@ -22,4 +22,3 @@ class RegistroForm(forms.Form):
         super().__init__(*args, **kwargs) 
         if id:
             self.fields['tipo_do_crime'].queryset = Tipocrimes.objects.filter(categoria_crime_id=id)
-    

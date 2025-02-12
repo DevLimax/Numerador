@@ -19,7 +19,7 @@ resultado_unidades = cursor.fetchall()
 
 contagem = 0
 
-is_activate = False
+is_activate = True
 
 for unidade in resultado_unidades:
     for modelo in resultado:
