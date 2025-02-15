@@ -52,12 +52,13 @@
         <div class="page-links">
             {% if page.has_previous %}
                 <a href="{% url 'home' %}?page={{ page.previous_page_number }}">
-                    <button><</button>
+                    <button>Anterior</button>
                 </a>
             {% endif %}
+            
             {% if page.has_next %}
                 <a href="{% url 'home' %}?page={{ page.next_page_number }}">
-                    <button>></button>
+                    <button>Próxima</button>
                 </a>
             {% endif %}
         </div>

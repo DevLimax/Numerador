@@ -17,7 +17,7 @@ body {
 form {
     width: 100%;
     max-width: 400px;
-    background: rgba(252, 250, 250, 0); 
+    background: white; 
     padding: 30px;
     border-radius: 10px;
     border: 1px solid #000; /* Borda preta */
@@ -59,7 +59,7 @@ form input[type="text"]:focus,
 form input[type="password"]:focus,
 form select:focus {
     border-color: rgba(47, 9, 119, 0.8); /* Muda a borda ao focar */
-    background-color: transparent ; /* Mantém o fundo transparente */
+    background-color:white ; /* Mantém o fundo transparente */
     color: #000000;
 }
 
@@ -69,8 +69,8 @@ form select:focus {
     margin-top: 20px;
     border-radius: 25px;
     border: none;
-    background-color: #ffffff;
-    color: #4b4b4b;
+    background-color: #555555;
+    color: #ffffff;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
