@@ -1,0 +1,153 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #969393 , #3e3f41);
+    color: #fff;
+}
+
+.container {
+    width: 900px;
+    display: flex;
+    box-shadow: 0px 4px 20px rgba(27, 25, 25, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    color: #333;
+}
+
+.login-container {
+    display: flex;
+    width: 100%;
+}
+
+.form-container {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-container {
+    flex: 1;
+    background: linear-gradient(135deg, #969393 , #3e3f41);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+form button:hover {
+    background-color: #0dc5f3;
+}
+
+form p label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+/* Estiliza os inputs */
+form p input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 25px; /* Bordas arredondadas */
+    font-size: 14px;
+    outline: none; /* Remove contorno padrão */
+    transition: border-color 0.3s ease; /* Animação de foco */
+}
+
+/* Alteração da borda no foco */
+form p input:focus {
+    border-color: #0c0c0c; /* Cor da borda ao focar */
+}
+
+/* Estiliza o botão */
+form button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 25px; /* Bordas arredondadas */
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #252324;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+form {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaçamento entre os elementos */
+    align-items: stretch;
+}
+
+/* Estiliza os elementos <p> gerados pelo as_p */
+form p {
+    margin: 0; /* Remove margens extras */
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Espaçamento entre o label e o input */
+}
+
+input {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn {
+    text-transform: uppercase;
+}
+
+.login-btn {
+    background-color: #3e3f41;;
+    color: #fff;
+}
+
+.signup-btn {
+    background-color: #fff;
+    color:#3e3f41; ;
+    border: 2px solid #fff;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    gap: 5px;
+}   
+
+.options a {
+    text-decoration: none;
+    color: #353132;
+}

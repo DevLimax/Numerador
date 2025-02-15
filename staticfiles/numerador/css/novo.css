@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Fundo cinza */
+    color: #000; /* Cor do texto agora é preto */
+}
+
+form {
+    width: 100%;
+    max-width: 400px;
+    background: rgba(252, 250, 250, 0); 
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid #000; /* Borda preta */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    backdrop-filter: blur(2px);
+}
+
+form h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+form label {
+    display: block;
+    font-size: 16px;
+    margin-top: 15px;
+    color: #000000;
+    text-align: left;
+}
+
+form input[type="text"],
+form input[type="password"],
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 25px;
+    border: 1px solid rgba(3, 3, 3, 0.644); /* Borda semitransparente */
+    background-color: transparent !important;  /* Fundo transparente */
+    color: #030303 ; /* Cor do texto */
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease; /* Transição para o foco */
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus,
+form select:focus {
+    border-color: rgba(47, 9, 119, 0.8); /* Muda a borda ao focar */
+    background-color: transparent ; /* Mantém o fundo transparente */
+    color: #000000;
+}
+
+.submit {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 25px;
+    border: none;
+    background-color: #ffffff;
+    color: #4b4b4b;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background-color: #d8b4fe;
+}
+
+form .extra-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+form .extra-links a {
+    color: #ffffff;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+form .extra-links a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+footer a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Estilos para o Select */
+form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 25px;
+    border: 1px solid rgba(3, 3, 3, 0.644); /* Borda semelhante aos inputs */
+    background-color: transparent; /* Fundo transparente */
+    color: #030303; /* Cor do texto */
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+form select:focus {
+    border-color: rgba(47, 9, 119, 0.8); /* Muda a borda ao focar */
+    color: #000000;
+}

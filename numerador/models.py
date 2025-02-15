@@ -115,8 +115,8 @@ class Numeradores(models.Model):
     id_numerador = models.AutoField(primary_key=True)
     unidade = models.ForeignKey(Unidades, on_delete=models.CASCADE, related_name='contador')
     categoria = models.ForeignKey(Categorias ,on_delete=models.CASCADE, default=0)  
-    contagem = models.IntegerField(default=0,null=False)
-    is_activate = models.BooleanField(default=False)
+    contagem = models.IntegerField(default=0)
+    is_activate = models.BooleanField(default=True)
     
     def __str__(self):
         return str(self.contagem)
