@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404
-from .forms import CadastroForm,LoginForm,RegistroForm
+from .forms import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
-from .models import Usuarios,Unidades,Categorias,Numeradores,Registros
+from .models import *
 from django.core.paginator import Paginator
 import requests
+from datetime import datetime
 
 
 def cadastro_view(request):
@@ -74,24 +75,13 @@ def logout_view(request):
 def home_view(request):
     if request.user.is_authenticated:
         unidade_usuario = request.session["unidade_id"]
-        url_api = "http://127.0.0.1:8000/api/Numeradores/"
-        params = {
-            'unidade_id':unidade_usuario,
-            'is_activate':True
-        }
-        response  = requests.get(url_api, params=params)
+        numeradores = Numeradores.objects.filter(unidade=unidade_usuario)
+        paginator = Paginator(numeradores, 4 )
+        page_number = request.GET.get('page')
+        paginator_obj = paginator.get_page(page_number)
+        return render(request,'HomeTemplate.html',{'page':paginator_obj})
         
-        if response.status_code == 200:
-            numeradores = response.json()
-            for numerador in numeradores:
-                numerador['categoria'] = Categorias.objects.get(id_categoria=numerador['categoria'])
-            paginator = Paginator(numeradores, 4 )
-            page_number = request.GET.get('page')
-            paginator_obj = paginator.get_page(page_number)
-            return render(request,'HomeTemplate.html',{'page':paginator_obj})
-        
-        else:
-            return HttpResponse(f'Error:{response.status_code}')    
+         
     
     return redirect('login')
 
@@ -102,44 +92,25 @@ def novo_registro_view(request,id_categoria):
         registro = RegistroForm(request.POST,id_categoria=id_categoria)
         
         if registro:
-            url = 'http://127.0.0.1:8000/api/DataAtual/get/'
-            data_response = requests.get(url).json()
+            date = datetime.today()
             titulo = registro['titulo'].value()
             observaçao = registro['observaçao'].value()
-            tipo_crime = registro['tipo_do_crime'].value()
-            categoria = id_categoria
-            usuario = request.session['id_usuario']
-            unidade = request.session['unidade_id']
+            tipo_crime = Tipocrimes.objects.get(id_crime=registro['tipo_do_crime'].value())
+            categoria = Categorias.objects.get(id_categoria=id_categoria)
+            usuario = User.objects.get(id=request.session['id_usuario'])
+            unidade = Unidades.objects.get(id_unidade=request.session['unidade_id'])
             
             numerador = Numeradores.objects.get(unidade=unidade,categoria=categoria)
             if numerador:
                 numerador.contagem += 1
                 numerador.save()
-                
-                url = 'http://127.0.0.1:8000/api/Registros/'
-                dados = {
-                "data": data_response['data'],
-                "titulo": titulo,
-                "observacao": observaçao,
-                "numeraçao": numerador.contagem,
-                "unidade": unidade,
-                "categoria": categoria,
-                "tipo_crime": int(tipo_crime),
-                "usuario": usuario
-                }
-                
-                print(dados)
-                response = requests.post(url,json=dados)
-                
-                if response.status_code == 201:
-                    dados_obj = Registros.objects.get(numeraçao=dados['numeraçao'],unidade_id=unidade,categoria_id=categoria,usuario_id=usuario)
-                    return render(request, 'RegistroCriado.html',{'dados':dados_obj})
-                else:
-                    return HttpResponse(f'Error:{response.status_code}')
-                
-                
-                
+                new_register = Registros(unidade=unidade,categoria=categoria,tipo_crime=tipo_crime,data=date,usuario=usuario,titulo=titulo,observacao=observaçao,numeraçao=numerador.contagem)
+                if new_register:
+                    new_register.save()
 
+                    register_content = Registros.objects.get(numeraçao=numerador.contagem,unidade_id=unidade,categoria_id=categoria,usuario_id=usuario)
+                    return render(request, 'RegistroCriado.html',{'dados':register_content})
+            
     return render(request,'NovoRegistroTemplate.html',{'form':registro})
     
 def list_numeradores(request,id):
